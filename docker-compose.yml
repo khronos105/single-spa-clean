@@ -13,6 +13,7 @@ services:
       - spa-network
     depends_on:
       - angular16
+      - angular21
     environment:
       - NODE_ENV=production
     restart: unless-stopped
@@ -25,6 +26,20 @@ services:
     container_name: spa-angular16
     ports:
       - "4201:4201"
+    networks:
+      - spa-network
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  # Angular 21 Microfrontend
+  angular21:
+    build:
+      context: ./angular21-app
+      dockerfile: Dockerfile
+    container_name: spa-angular21
+    ports:
+      - "4202:4202"
     networks:
       - spa-network
     environment:
