@@ -12,7 +12,7 @@ import { HomeComponent } from './home/home.component';
  * The parent route (/angular16) is handled by single-spa
  */
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '**', component: HomeComponent },
 ];
 
 @NgModule({
@@ -23,13 +23,13 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes, {
-      // Use hash routing to avoid conflicts with single-spa routing
-      useHash: true,
+      // No hash routing - single-spa handles routes
+      useHash: false,
     }),
   ],
   providers: [
-    // Set base href for this microfrontend
-    { provide: APP_BASE_HREF, useValue: '/angular16/' },
+    // Empty base href - single-spa manages the /angular16 route
+    { provide: APP_BASE_HREF, useValue: '/' },
   ],
   bootstrap: [AppComponent],
 })

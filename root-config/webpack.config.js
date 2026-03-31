@@ -11,9 +11,6 @@ module.exports = (env, argv) => {
     output: {
       filename: 'root-config.js',
       path: path.resolve(__dirname, 'dist'),
-      library: {
-        type: 'system',
-      },
       clean: true,
     },
     module: {
@@ -52,7 +49,7 @@ module.exports = (env, argv) => {
         directory: path.join(__dirname, 'dist'),
       },
     },
-    externals: ['single-spa'],
+    externals: [],
     devtool: isProduction ? 'source-map' : 'eval-source-map',
   };
 };

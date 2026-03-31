@@ -7,6 +7,9 @@
  * - unmount: Clean up the app (runs when route becomes inactive)
  */
 
+// CRITICAL: Import Zone.js first, before any Angular imports
+import 'zone.js';
+
 import { NgModuleRef, PlatformRef } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
@@ -39,6 +42,22 @@ export async function mount(props: SingleSpaProps): Promise<void> {
   console.log('[Angular 16] Mount', props);
   
   try {
+    // Create the app container element where Angular will render
+    const container = document.createElement('div');
+    container.id = 'angular16-app-root';
+    
+    // Create the Angular root element
+    const appRoot = document.createElement('app-root');
+    container.appendChild(appRoot);
+    
+    // Append to single-spa application container
+    const spaContainer = document.getElementById('single-spa-application');
+    if (spaContainer) {
+      spaContainer.appendChild(container);
+    } else {
+      document.body.appendChild(container);
+    }
+    
     // Create platform if it doesn't exist
     if (!platformRef) {
       platformRef = platformBrowserDynamic();
@@ -71,6 +90,12 @@ export async function unmount(props: SingleSpaProps): Promise<void> {
     if (ngModuleRef) {
       ngModuleRef.destroy();
       ngModuleRef = null;
+    }
+    
+    // Remove the container element
+    const container = document.getElementById('angular16-app-root');
+    if (container) {
+      container.remove();
     }
     
     // Note: We don't destroy platformRef to allow remounting

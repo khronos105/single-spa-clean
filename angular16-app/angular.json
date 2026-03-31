@@ -18,9 +18,7 @@
             "outputPath": "dist/angular16-app",
             "index": "src/index.html",
             "main": "src/main.single-spa.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [],
             "styles": [],
@@ -53,14 +51,14 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
             "port": 4201,
-            "buildTarget": "angular16-app:build"
+            "browserTarget": "angular16-app:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "angular16-app:build:production"
+              "browserTarget": "angular16-app:build:production"
             },
             "development": {
-              "buildTarget": "angular16-app:build:development"
+              "browserTarget": "angular16-app:build:development"
             }
           },
           "defaultConfiguration": "development"
