@@ -1,0 +1,25 @@
+{
+  "name": "@spa/root-config",
+  "version": "1.0.0",
+  "description": "Single-SPA root configuration for Angular microfrontends",
+  "scripts": {
+    "start": "webpack serve --mode development --port 9000",
+    "build": "webpack --mode production",
+    "serve": "serve dist -l 9000"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "babel-loader": "^9.1.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "html-webpack-plugin": "^5.5.3",
+    "serve": "^14.2.1",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "single-spa": "^6.0.0"
+  }
+}

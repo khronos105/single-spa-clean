@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single-SPA Root Config</title>
+  
+  <!-- 
+    CRITICAL: Load SystemJS BEFORE any modules
+    SystemJS enables dynamic module loading via import maps
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.15.1/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.15.1/dist/extras/amd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.15.1/dist/extras/named-exports.min.js"></script>
+  
+  <!--
+    Import Map: Maps module names to URLs
+    This allows dynamic loading of microfrontends without build-time coupling
+  -->
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@6.0.0/lib/system/single-spa.min.js",
+        "@spa/root-config": "/root-config.js",
+        "@spa/angular16": "http://localhost:4201/main.js",
+        "@spa/angular21": "http://localhost:4202/main.js"
+      }
+    }
+  </script>
+  
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <!-- 
+    Navigation Header
+    Provides links to switch between microfrontends
+  -->
+  <header class="spa-header">
+    <div class="container">
+      <h1>🦞 Single-SPA Architecture</h1>
+      <nav class="spa-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/angular16" class="nav-link">Angular 16</a>
+        <a href="/angular21" class="nav-link">Angular 21</a>
+      </nav>
+    </div>
+  </header>
+  
+  <!--
+    Main Content Area
+    single-spa will mount/unmount applications here based on routes
+  -->
+  <main id="single-spa-application">
+    <div class="welcome-screen">
+      <h2>Welcome to Single-SPA Microfrontends</h2>
+      <p>This is a root configuration orchestrating two Angular applications:</p>
+      <ul>
+        <li><strong>Angular 16 App</strong> - Route: <code>/angular16</code></li>
+        <li><strong>Angular 21 App</strong> - Route: <code>/angular21</code></li>
+      </ul>
+      <p>Click the navigation links above to load different microfrontends.</p>
+      <div class="features">
+        <div class="feature">
+          <h3>✅ Complete Isolation</h3>
+          <p>Each app has its own Zone.js and Angular version</p>
+        </div>
+        <div class="feature">
+          <h3>🔌 SystemJS Loading</h3>
+          <p>Dynamic module loading via import maps</p>
+        </div>
+        <div class="feature">
+          <h3>🚀 Independent Deployment</h3>
+          <p>Each microfrontend can be deployed separately</p>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!--
+    Load the root-config module
+    This initializes single-spa and registers all microfrontends
+  -->
+  <script>
+    System.import('@spa/root-config').catch(err => {
+      console.error('Failed to load root-config:', err);
+      document.getElementById('single-spa-application').innerHTML = `
+        <div class="error">
+          <h2>❌ Failed to Initialize</h2>
+          <p>Check console for errors.</p>
+          <pre>${err.message}</pre>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
