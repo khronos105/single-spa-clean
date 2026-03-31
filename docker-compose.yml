@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # Root Config - Single-SPA orchestration layer
+  root-config:
+    build:
+      context: ./root-config
+      dockerfile: Dockerfile
+    container_name: spa-root-config
+    ports:
+      - "9001:9000"
+    networks:
+      - spa-network
+    depends_on:
+      - angular16
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  # Angular 16 Microfrontend
+  angular16:
+    build:
+      context: ./angular16-app
+      dockerfile: Dockerfile
+    container_name: spa-angular16
+    ports:
+      - "4201:4201"
+    networks:
+      - spa-network
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+networks:
+  spa-network:
+    driver: bridge

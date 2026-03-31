@@ -16,23 +16,16 @@
   <!--
     Import Map: Maps module names to URLs
     This allows dynamic loading of microfrontends without build-time coupling
+    
+    ANGULAR16_URL and ANGULAR21_URL will be replaced at runtime
   -->
-  <script>
-    // Dynamic import map - uses browser's current host
-    const protocol = window.location.protocol;
-    const hostname = window.location.hostname;
-    
-    const importMap = {
+  <script type="systemjs-importmap">
+    {
       "imports": {
-        "@spa/angular16": `${protocol}//${hostname}:4201/main.js`,
-        "@spa/angular21": `${protocol}//${hostname}:4202/main.js`
+        "@spa/angular16": "__ANGULAR16_URL__/main.js",
+        "@spa/angular21": "__ANGULAR21_URL__/main.js"
       }
-    };
-    
-    const script = document.createElement('script');
-    script.type = 'systemjs-importmap';
-    script.textContent = JSON.stringify(importMap);
-    document.currentScript.parentNode.insertBefore(script, document.currentScript.nextSibling);
+    }
   </script>
   
   <link rel="stylesheet" href="/styles.css">
@@ -78,6 +71,10 @@
         <div class="feature">
           <h3>🚀 Independent Deployment</h3>
           <p>Each microfrontend can be deployed separately</p>
+        </div>
+        <div class="feature">
+          <h3>🐳 Dockerized</h3>
+          <p>All services run in isolated containers</p>
         </div>
       </div>
     </div>
